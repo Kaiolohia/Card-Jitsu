@@ -132,11 +132,9 @@ def bankUpdate(roundwinner, selfcard, enemycard):
   return
 
 def didIWinYet(bank):
-  #elements check
   Fire = False
   Water = False
   Snow = False
-  #checking for Fire
   for x in range(len(bank)):
     if bank[x][1] == "Fire":
       Fire = True
