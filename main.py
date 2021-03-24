@@ -1,5 +1,5 @@
 import random
-import replit
+from os import system, name
 #YOU CAN EDIT THIS VAR AND NOT BREAK THINGS!!! 
 #StringSetting1 gives complicated card information per card and is a paragraph of text per turn while
 #stringSetting0 is a simple version
@@ -187,6 +187,14 @@ class utils:
     print('        \/     \/           \/                         \/       ')
     print('Developed by Kai \nVersion: 0.2\nDisc: Trux#0001\n')
 
+  def clear():
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = system('clear')
+
 #this is the main game function that runs the entire thing. We use an input to start the game that way we can restart after the game is played or refuse to play if it is accidentally started.
 def game(readyOrNot):
     activeGame = False
@@ -204,7 +212,7 @@ def game(readyOrNot):
       activeGame = True
       deal.dealNewHandToSelf()
       deal.dealNewHandToEnemy()
-      replit.clear()
+      utils.clear()
       utils.mainlogo()
       while activeGame == True:
         validInput = False
@@ -217,7 +225,7 @@ def game(readyOrNot):
           else:
             print('Invalid Input\nPlease try again.')
         EnemyCardPlayed = random.randint(0,4)
-        replit.clear()
+        utils.clear()
         utils.mainlogo()
         print('\n▶ You '+ utils.roundWinner(playedCard,EnemyCardPlayed) + ' this round to ' + ui.cardInfoToString(enemyhand[EnemyCardPlayed]) +' ◀')
         utils.bankUpdate(utils.roundWinner(playedCard,EnemyCardPlayed),selfhand[playedCard-1],enemyhand[EnemyCardPlayed])
