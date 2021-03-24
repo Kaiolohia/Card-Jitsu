@@ -3,7 +3,7 @@ from os import system, name
 #YOU CAN EDIT THIS VAR AND NOT BREAK THINGS!!! 
 #StringSetting1 gives complicated card information per card and is a paragraph of text per turn while
 #stringSetting0 is a simple version
-stringsetting = 0
+stringsetting = 1
 
 
 deck = []
@@ -73,7 +73,7 @@ class ui:
     if stringsetting == 0:
       print('❰ Your Hand ❱\n| 1. ' + ui.simplecardformatter(selfhand[0]) + '\n| 2. ' + ui.simplecardformatter(selfhand[1]) + '\n| 3. ' + ui.simplecardformatter(selfhand[2]) + '\n| 4. ' + ui.simplecardformatter(selfhand[3]) + '\n| 5. ' + ui.simplecardformatter(selfhand[4]) + '\n―――――――――――――')
     if stringsetting == 1:
-      print('--------------Your Hand--------------\n| 1. a '+ str(selfhand[0][0]) + ' ' + str(selfhand[0][1]) + ' with a value of ' + str(selfhand[0][2]) + ' ' + ui.symbols(selfhand[0][1]) + '\n| 2. a ' + str(selfhand[1][0]) + ' ' + str(selfhand[1][1]) + ' with a value of ' + str(selfhand[1][2]) + ' ' + ui.symbols(selfhand[1][1]) + '\n| 3. a ' + str(selfhand[2][0]) + ' ' + str(selfhand[2][1]) + ' with a value of ' + str(selfhand[2][2]) + ' ' + ui.symbols(selfhand[2][1]) + '\n| 4. a ' + str(selfhand[3][0]) + ' ' + str(selfhand[3][1]) + ' with a value of ' + str(selfhand[3][2]) + ' ' + ui.symbols(selfhand[3][1]) + '\n| 5. and a ' + str(selfhand[4][0]) + ' ' + str(selfhand[4][1]) + ' with a value of ' + str(selfhand[4][2]) + ' ' + ui.symbols(selfhand[0][1]) + '\n-------------------------------------')
+      print('--------------Your Hand--------------\n| 1. a '+ str(selfhand[0][0]) + ' ' + str(selfhand[0][1]) + ' with a value of ' + str(selfhand[0][2]) + ' ' + '\n| 2. a ' + str(selfhand[1][0]) + ' ' + str(selfhand[1][1]) + ' with a value of ' + str(selfhand[1][2]) + ' ' + '\n| 3. a ' + str(selfhand[2][0]) + ' ' + str(selfhand[2][1]) + ' with a value of ' + str(selfhand[2][2]) + ' ' + '\n| 4. a ' + str(selfhand[3][0]) + ' ' + str(selfhand[3][1]) + ' with a value of ' + str(selfhand[3][2]) + ' ' + '\n| 5. and a ' + str(selfhand[4][0]) + ' ' + str(selfhand[4][1]) + ' with a value of ' + str(selfhand[4][2]) + ' ' + '\n-------------------------------------')
   
   def cardInfoToString(card):
     return 'a '+ str(card[0]) + ' ' + str(card[1]) + ' '  + str(card[2])
@@ -122,7 +122,6 @@ class ui:
 
 #the utilities class deals with the un organized functions required to make the game work such as win conditions and bank work.
 class utils:
-
   def roundWinner(playedcard,enemyCard):
     currentSelfCard = selfhand[playedcard - 1]
     currentEnemyCard = enemyhand[enemyCard]
@@ -177,7 +176,6 @@ class utils:
     if len(FireColors) == 3 or len(WaterColors) == 3 or len(SnowColors) == 3:
       return True
   
-    
   def mainlogo():
     print('_________                  .___      ____.__  __                ')
     print('\_   ___ \_____ _______  __| _/     |    |__|/  |_  ________ __ ')
@@ -188,26 +186,32 @@ class utils:
     print('Developed by Kai \nVersion: 0.2\nDisc: Trux#0001\n')
 
   def clear():
-    # for windows
     if name == 'nt':
         _ = system('cls')
-    # for mac and linux(here, os.name is 'posix')
     else:
         _ = system('clear')
 
-#this is the main game function that runs the entire thing. We use an input to start the game that way we can restart after the game is played or refuse to play if it is accidentally started.
-def game(readyOrNot):
-    activeGame = False
+  def newDeck():
     deck.clear()
-    selfhand.clear()
-    enemyhand.clear()
-    selfBank.clear()
-    enemyBank.clear()
     for value in range(2,13):
       for color in range(6):
         for element in range(3):
           newCard = Card(color, element, value)
           deck.append(newCard.getCard())
+
+  def newGame():
+    utils.newDeck()
+    selfhand.clear()
+    enemyhand.clear()
+    selfBank.clear()
+    enemyBank.clear()
+
+#this is the main game function that runs the entire thing. We use an input to start the game that way we can restart after the game is played or refuse to play if it is accidentally started.
+
+
+def game(readyOrNot):
+    activeGame = False
+    utils.newGame()
     if readyOrNot == 'y':
       activeGame = True
       deal.dealNewHandToSelf()
